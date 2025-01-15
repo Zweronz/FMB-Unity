@@ -102,7 +102,7 @@ public unsafe class UMBImporter : ScriptedImporter
 
                     for (int j = 0; j < umb->objects[i].frames[0].numVertices; j++)
                     {
-                        vertices[j] = umb->objects[i].frames[0].vertices[j].ToUnityVector();
+                        vertices[j] = umb->objects[i].frames[0].vertex[j].vertex.ToUnityVector();
                         //normals[j] = umb->objects[i].frames[0].normals[j].ToUnityVector();
 
                         //normals[j].Normalize();

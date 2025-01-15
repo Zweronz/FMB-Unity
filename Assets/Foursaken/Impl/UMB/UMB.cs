@@ -13,6 +13,12 @@ public unsafe struct UMBVector3
 };
 
 [StructLayout(LayoutKind.Sequential)]
+public unsafe struct UMBVertex
+{
+    public UMBVector3 vertex, normal;
+};
+
+[StructLayout(LayoutKind.Sequential)]
 public unsafe struct UMBFrame
 {
     public int number;
@@ -33,7 +39,7 @@ public unsafe struct UMBFrame
 
     public int numVertices;
 
-    public UMBVector3* vertices, normals;
+    public UMBVertex* vertex;
 };
 
 [StructLayout(LayoutKind.Sequential)]
