@@ -152,8 +152,8 @@ public unsafe class FMBImporter : ScriptedImporter
                     //    mesh.normals = normals;
                     //}
 
-                    if (fmb->objects[i].hasTextures) mesh.uv = ReadVector2s(fmb->textureDataType, fmb->objects[i].textures, fmb->objects[i].numVertices);
-                    if (fmb->objects[i].hasColors) mesh.colors32 = ReadColors(fmb->colorDataType, fmb->objects[i].colors, fmb->objects[i].numVertices);
+                    if (fmb->objects[i].hasTextures == 1) mesh.uv = ReadVector2s(fmb->textureDataType, fmb->objects[i].textures, fmb->objects[i].numVertices);
+                    if (fmb->objects[i].hasColors == 1) mesh.colors32 = ReadColors(fmb->colorDataType, fmb->objects[i].colors, fmb->objects[i].numVertices);
 
                     mesh.RecalculateBounds();
                     mesh.RecalculateNormals(); //here for the time being. the normals are being weird
@@ -178,7 +178,7 @@ public unsafe class FMBImporter : ScriptedImporter
     //below this point is very clearly extremely readable and probably the best c# code you've ever read in your entire life
     //I might just implement this into the native library at some point because..... yikes.
 
-    private static Vector3[] ReadVector3s(FMBDataType dataType, char* data, int length)
+    private static Vector3[] ReadVector3s(FMBDataType dataType, byte* data, int length)
     {
         int index = 0;
         Vector3[] vectors = new Vector3[length];
@@ -188,11 +188,11 @@ public unsafe class FMBImporter : ScriptedImporter
             switch (dataType)
             {
                 case FMBDataType.FMB_BYTE:
-                    vectors[i] = new Vector3(((byte*)data)[index], ((byte*)data)[index + 1], ((byte*)data)[index + 2]);
+                    vectors[i] = new Vector3(((sbyte*)data)[index], ((sbyte*)data)[index + 1], ((sbyte*)data)[index + 2]);
                     break;
 
-                case FMBDataType.FMB_SIGNED_BYTE:
-                    vectors[i] = new Vector3(((sbyte*)data)[index], ((sbyte*)data)[index + 1], ((sbyte*)data)[index + 2]);
+                case FMBDataType.FMB_UNSIGNED_BYTE:
+                    vectors[i] = new Vector3(((byte*)data)[index], ((byte*)data)[index + 1], ((byte*)data)[index + 2]);
                     break;
 
                 case FMBDataType.FMB_SHORT:
@@ -214,7 +214,7 @@ public unsafe class FMBImporter : ScriptedImporter
         return vectors;
     }
 
-    private static Vector2[] ReadVector2s(FMBDataType dataType, char* data, int length)
+    private static Vector2[] ReadVector2s(FMBDataType dataType, byte* data, int length)
     {
         int index = 0;
         Vector2[] vectors = new Vector2[length];
@@ -224,11 +224,11 @@ public unsafe class FMBImporter : ScriptedImporter
             switch (dataType)
             {
                 case FMBDataType.FMB_BYTE:
-                    vectors[i] = new Vector2(((byte*)data)[index], ((byte*)data)[index + 1]);
+                    vectors[i] = new Vector2(((sbyte*)data)[index], ((sbyte*)data)[index + 1]);
                     break;
 
-                case FMBDataType.FMB_SIGNED_BYTE:
-                    vectors[i] = new Vector2(((sbyte*)data)[index], ((sbyte*)data)[index + 1]);
+                case FMBDataType.FMB_UNSIGNED_BYTE:
+                    vectors[i] = new Vector2(((byte*)data)[index], ((byte*)data)[index + 1]);
                     break;
 
                 case FMBDataType.FMB_SHORT:
@@ -250,7 +250,7 @@ public unsafe class FMBImporter : ScriptedImporter
         return vectors;
     }
 
-    private static Color32[] ReadColors(FMBDataType dataType, char* data, int length)
+    private static Color32[] ReadColors(FMBDataType dataType, byte* data, int length)
     {
         int index = 0;
         Color32[] colors = new Color32[length];
@@ -260,11 +260,11 @@ public unsafe class FMBImporter : ScriptedImporter
             switch (dataType)
             {
                 case FMBDataType.FMB_BYTE:
-                    colors[i] = new Color32(((byte*)data)[index], ((byte*)data)[index + 1], ((byte*)data)[index + 2], ((byte*)data)[index + 3]);
+                    colors[i] = new Color32((byte)((sbyte*)data)[index], (byte)((sbyte*)data)[index + 1], (byte)((sbyte*)data)[index + 2], (byte)((sbyte*)data)[index + 3]);
                     break;
 
-                case FMBDataType.FMB_SIGNED_BYTE:
-                    colors[i] = new Color32((byte)((sbyte*)data)[index], (byte)((sbyte*)data)[index + 1], (byte)((sbyte*)data)[index + 2], (byte)((sbyte*)data)[index + 3]);
+                case FMBDataType.FMB_UNSIGNED_BYTE:
+                    colors[i] = new Color32(((byte*)data)[index], ((byte*)data)[index + 1], ((byte*)data)[index + 2], ((byte*)data)[index + 3]);
                     break;
 
                 case FMBDataType.FMB_SHORT:
@@ -286,7 +286,7 @@ public unsafe class FMBImporter : ScriptedImporter
         return colors;
     }
 
-    private static int[] ReadIndices(FMBDataType dataType, char* data, int length)
+    private static int[] ReadIndices(FMBDataType dataType, byte* data, int length)
     {
         int fullLength = length * 3;
         int[] indices = new int[fullLength];
@@ -296,11 +296,11 @@ public unsafe class FMBImporter : ScriptedImporter
             switch (dataType)
             {
                 case FMBDataType.FMB_BYTE:
-                    indices[i] = ((byte*)data)[i];
+                    indices[i] = ((sbyte*)data)[i];
                     break;
 
-                case FMBDataType.FMB_SIGNED_BYTE:
-                    indices[i] = ((sbyte*)data)[i];
+                case FMBDataType.FMB_UNSIGNED_BYTE:
+                    indices[i] = ((byte*)data)[i];
                     break;
 
                 case FMBDataType.FMB_SHORT:

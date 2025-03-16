@@ -10,20 +10,20 @@ public unsafe struct UMBVector3
     {
         return new Vector3(x, y, z);
     }
-};
+}
 
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct UMBVertex
 {
     public UMBVector3 vertex, normal;
-};
+}
 
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct UMBFrame
 {
     public int number;
 
-    public bool usePreviousIndexData, usePreviousTextureData;
+    public ushort usePreviousIndexData, usePreviousTextureData;
 
     public int numFaces;
 
@@ -40,7 +40,7 @@ public unsafe struct UMBFrame
     public int numVertices;
 
     public UMBVertex* vertex;
-};
+}
 
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct UMBObject
@@ -48,19 +48,17 @@ public unsafe struct UMBObject
     public int materialIndex, numKeyFrames, numAnimationFrames;
 
     public UMBFrame* frames;
-};
+}
 
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct UMBMaterial
 {
     public char* name, texturePath, textureBase;
 
-    public bool hasTexture;
-
     public OpaqueColor ambient, diffuse, specular;
 
     public float glossiness;
-};
+}
 
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct UMB
@@ -72,4 +70,4 @@ public unsafe struct UMB
     public int numObjects;
 
     public UMBObject* objects;
-};
+}
