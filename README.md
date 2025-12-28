@@ -1,5 +1,5 @@
 # FMB-Unity
-a unity package to import Foursaken Media (.umb, .fmb, .fmb2) model formats using ScriptedImporter
+a unity package to import Foursaken Media (.umb, .fmb, .fmb2) model formats using ScriptedImporter.
 very work in progress. no support for animation or bones. still missing support for unpublished .fmb files.
 
 
